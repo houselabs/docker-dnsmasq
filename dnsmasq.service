@@ -1,0 +1,15 @@
+[Unit]
+Description=dnsmasq
+After=docker.service
+Requires=docker.service
+
+[Service]
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill dnsmasq
+ExecStartPre=-/usr/bin/docker rm dnsmasq
+#ExecStartPre=/usr/bin/docker pull houselabs/dnsmasq
+ExecStart=/usr/bin/docker run --name=dnsmasq --cap-add=NET_ADMIN -v /data/dnsmasq/dnsmasq.conf:/etc/dnsmasq.conf -v /data/dnsmasq/dnsmasq.d:/etc/dnsmasq.d -v /etc/localtime:/etc/localtime houselabs/dnsmasq
+ExecStop=/usr/bin/docker stop dnsmasq
+
+[Install]
+WantedBy=multi-user.target
