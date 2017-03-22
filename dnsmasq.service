@@ -8,7 +8,7 @@ TimeoutStartSec=0
 ExecStartPre=-/usr/bin/docker kill dnsmasq
 ExecStartPre=-/usr/bin/docker rm dnsmasq
 #ExecStartPre=/usr/bin/docker pull houselabs/dnsmasq
-ExecStart=/usr/bin/docker run --name=dnsmasq --cap-add=NET_ADMIN -v /data/dnsmasq/dnsmasq.conf:/etc/dnsmasq.conf -v /data/dnsmasq/dnsmasq.d:/etc/dnsmasq.d -v /etc/localtime:/etc/localtime houselabs/dnsmasq
+ExecStart=/usr/bin/docker run --name=dnsmasq --cap-add=NET_ADMIN -p 53:53 -p 53:53/udp  -v /data/dnsmasq/dnsmasq.d:/etc/dnsmasq.d -v /etc/localtime:/etc/localtime houselabs/dnsmasq
 ExecStop=/usr/bin/docker stop dnsmasq
 
 [Install]
